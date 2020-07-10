@@ -30,15 +30,20 @@
 
         .main_visual {
             background-image: url('img/main_01.jpg');
-            height: 900px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 0px -140px;
+            height: 920px;
             width: 100%;
             position: relative;
+            z-index: 20;
         }
 
         .main_visual_text {
             color: #fff;
             position: absolute;
-            top: 40%;
+            top: 50%;
+            transform: translateY(-50%);
             left: 40%;
         }
 
@@ -57,38 +62,78 @@
             color: #404040;
         }
 
-        /* HEADER */
-        #header {
-            position: fixed;
-            width:100%;
-            /* background-color:green; */
+        .clear::after {
+            content: '';
+            display: block;
+            clear: both;
         }
 
-        #header .header_wrap{
+        /* main visual btn */
+        .main_visual button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0;
+            border: 0;
+            background: url('img/spr.png');
+            background-size: 200px 390px;
+            width: 30px;
+            height: 65px;
+        }
+
+        .main_visual .btn_prev {
+            left: 50px;
+            background-position: 0 165px;
+        }
+
+        .main_visual .btn_next {
+            right: 50px;
+            background-position: 0 230px;
+        }
+
+        /* HEADER */
+        #header {
+            background-color: rgb(255, 255, 255, 0);
+            z-index: 999;
+        }
+
+        #header.on {
+            position: fixed;
+            background-color: rgb(255, 255, 255, 1);
+            color: #000;
+            top: 0;
+            right: 0;
+            left: 0;
+            border-bottom: 1px solid #eaeaea;       
+        }
+
+        #header .header_wrap {
             width: 60%;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin: 0 auto;
-            padding-top: 40px;
-            /* z-index: 999; */
-        }
-
-        #header .logo img {
-            width: 174px;
-            height: 24px;
+            height: 80px;
         }
 
         #header #nav {
             display: flex;
-            width: 700px;
             justify-content: space-around;
             align-items: center;
             font-size: 0.8rem;
             margin-right: 50px;
+            margin-left: 50px;
+            margin: 0 auto;
         }
 
         #header #nav li a {
+            margin-right: 50px;
             color: #fff;
+            float: left;
+        }
+
+        #header.on #nav li a {
+            color: #000;
         }
 
         #header #nav li a:hover {
@@ -96,10 +141,22 @@
             text-decoration: underline;
         }
 
+        #header.on #nav li a:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+
         #header #language {
             background-color: rgba(0, 0, 0, 0);
             border: none;
             color: #fff;
+            float: right;
+        }
+
+        #header.on #language {
+            background-color: rgba(0, 0, 0, 0);
+            border: none;
+            color: #000;
         }
 
         #header #language option {
@@ -111,7 +168,6 @@
             margin-top: 100px;
             text-align: center;
         }
-
 
         #section #about_line p {
             padding: 50px 0;
@@ -264,16 +320,47 @@
 
         /* N O T I C E */
         #notice {
-            clear: both;
+            /* clear: both; */
             padding-top: 100px;
         }
 
         #notice .notice_box {
-            height: 500px;
-            background-color: #595959;
-            width: 70%;
+            width: 1000px;
             margin: 0 auto;
+            font-size: 0.9rem;
         }
+
+        #notice .notice_box table {
+            border: 1px solid #fff;
+            color: #404040;
+        }
+
+        #notice .notice_box th {
+            border-top: 1px solid #A6A6A6;
+            border-bottom: 1px solid #A6A6A6;
+            padding: 20px;
+            font-weight: 800;
+            color: #404040;
+        }
+
+        #notice .notice_box td {
+            padding: 30px;
+            border: 1px solid #fff;
+            text-align: center;
+            border-bottom: 1px solid #A6A6A6;
+            color: #404040;
+        }
+
+        #notice .notice_box td a {
+            color: #404040;
+        }
+
+        #notice .notice_box tr td:nth-child(3) {
+            text-align: left;
+            font-weight: 900;
+        }
+
+
 
         /* O F F I C I A L C H A N N E L */
         #offi_channel {
@@ -361,11 +448,16 @@
 
         #footer .footer_sitemap li a {
             color: #B3B3B3;
+            vertical-align: middle;
         }
 
-        #footer .footer_sitemap li::after {
+        #footer .footer_sitemap li:after {
             content: "|";
             margin-left: 10px;
+        }
+
+        #footer .footer_sitemap li:last-child:after {
+            content: "";
         }
 
         #footer .footer_info {
@@ -379,9 +471,13 @@
             line-height: 20px;
         }
 
-        #footer .footer_info li::after {
+        #footer .footer_info li:after {
             content: "|";
             margin-left: 10px;
+        }
+
+        #footer .footer_info .no_line:after {
+            content: "";
         }
 
         #footer .footer_sns {
@@ -437,6 +533,12 @@
     <div class="wrap">
         <!-- HEADER -->
         <div class="main_visual">
+            <div class="main_slide">
+                <!-- <img src="img/main_01.jpg" alt=""> -->
+                <img src="" alt="">
+                <img src="" alt="">
+                <img src="" alt="">
+            </div>
             <header id="header">
                 <div class="header_wrap">
                     <a href="#">
@@ -462,6 +564,8 @@
                     </select>
                 </div>
             </header>
+            <button type="button" class="btn_prev"><span class="screen_out">이전</span></button>
+            <button type="button" class="btn_next"><span class="screen_out">다음</span></button>
             <div class="main_visual_text">
                 <p>Global Creative Studio</p>
                 <img src="img/img_c_logo.png" alt="">
@@ -579,7 +683,40 @@
             <!-- NOTICE -->
             <article id="notice">
                 <h2 class="h2">NOTICE</h2>
-                <div class="notice_box"></div>
+                <table class="notice_box">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>지역</th>
+                            <th>제목</th>
+                            <th>날짜</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>20</td>
+                            <td>한국</td>
+                            <td><a href="#"> 네이버 쇼핑 <라인프렌즈 브랜드데이> 진행 안내 (6/10)</a></td>
+                            <td>2020-06-05</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td>20</td>
+                            <td>한국</td>
+                            <td><a href="#"> 네이버 쇼핑 <라인프렌즈 브랜드데이> 진행 안내 (6/10)</a></td>
+                            <td>2020-06-05</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td>20</td>
+                            <td>한국</td>
+                            <td><a href="#"> 네이버 쇼핑 <라인프렌즈 브랜드데이> 진행 안내 (6/10)</a></td>
+                            <td>2020-06-05</td>
+                        </tr>
+                    </tbody>
+                </table>
             </article>
 
             <!-- offi_channel -->
@@ -661,10 +798,10 @@
                     <ul class="footer_info">
                         <li>라인프렌즈 주식회사</li>
                         <li>사업자등록번호: 726-87-00030</li>
-                        <li>통신판매업 신고번호 : 2015-경기성남-0597</li>
+                        <li class="no_line">통신판매업 신고번호 : 2015-경기성남-0597</li>
                         <li>대표이사 : 김성훈</li>
                         <li>서울특별시 용산구 한남대로 98, 5층 라인프렌즈</li>
-                        <li>1544-5921</li>
+                        <li class="no_line">1544-5921</li>
                     </ul>
                     <h6>Copyright © LINE Friends All Rights Reserved</h6>
                 </div>
@@ -680,5 +817,28 @@
         </footer>
     </div>
 </body>
+<script>
+    const htmlElem = document.querySelector('html');
+    const header = document.querySelector('#header');
+    const logoImg = document.querySelector('#header .logo>img');
+
+    // const header = document.querySelector('#header');
+
+    window.addEventListener('scroll', headerScroll);
+
+    function headerScroll() {
+        console.log(htmlElem.scrollTop);
+        console.log(logoImg);
+
+
+        if (htmlElem.scrollTop > 10) {
+            header.classList.add('on');
+            logoImg.src = 'img/img_logo2.png'
+        } else {
+            header.classList.remove('on');
+            logoImg.src = 'img/img_logo.png'
+        }
+    }
+</script>
 
 </html>
