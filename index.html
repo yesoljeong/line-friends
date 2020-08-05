@@ -46,10 +46,11 @@
             </header>
             <div class="cover"></div>
             <div class="main_slide">
-                <img src="img/main_01.jpg" alt="">
+                <img src="img/main_01.jpg" class="on" alt="">
                 <img src="img/main_02.jpg" alt="">
                 <img src="img/main_03.jpg" alt="">
             </div>
+            <ul class="bottom_btn"></ul>
             <button type="button" class="btn_prev"><span class="screen_out">이전</span></button>
             <button type="button" class="btn_next"><span class="screen_out">다음</span></button>
             <div class="main_visual_text">
@@ -72,11 +73,13 @@
                     iframe으로 삽입하는 경우 외부 라이브러리에서 발생하는 touchstart 이벤트 등의 보안 경고가 발생하여 object 태그 사용
                     참고 : https://www.it-swarm.dev/ko/javascript/iframe%EC%97%86%EC%9D%B4-html5-youtube-%EB%8F%99%EC%98%81%EC%83%81%EC%9D%84-%EC%82%BD%EC%9E%85-%ED%95%98%EC%8B%9C%EA%B2%A0%EC%8A%B5%EB%8B%88%EA%B9%8C/1042377820/
                  -->
-                 <!-- 
+                <!-- 
                     VSCode의 Live Server의 도메인과 참조하는 유투브의 도메인이 다르기 때문에 Same Site 이슈가 발생함
                     해결 시 참고 : https://github.com/GoogleChromeLabs/samesite-examples (근본적인 해결책은 아니고 브라우저상 disable 설정임)
                   -->
-                <object style="width:100%;height:100%;width: 560px; height: 315px; float: none; clear: both; margin: 2px auto;" data="https://www.youtube.com/embed/YdGtxXYIFQc">
+                <object
+                    style="width:100%;height:100%;width: 560px; height: 315px; float: none; clear: both; margin: 2px auto;"
+                    data="https://www.youtube.com/embed/YdGtxXYIFQc">
                 </object>
             </article>
 
@@ -97,7 +100,7 @@
                         </p>
                     </div>
                     <div>
-                        <img src="img/img_sec_icon6.gif" alt="">    
+                        <img src="img/img_sec_icon6.gif" alt="">
                         <p class="core_business_title">CONTENTS</p>
                         <p class="core_business_desc">애니메이션, 게임 콘텐츠를 내부 스튜디오에서 자체 제작하는 동시에 IT 노하우와 기술을 더하여 AI,IoT 등으로
                             사업을 확장하고 있습니다.
@@ -316,14 +319,13 @@
     const header = document.querySelector('#header');
     const logoImg = document.querySelector('#header .logo>img');
     const mainSlide = document.querySelectorAll('.main_slide img');
+    const mainSlideWrap = document.querySelector('.main_slide');
     const prevBtn = document.querySelector('.btn_prev');
     const nextBtn = document.querySelector('.btn_next');
+    const bottomBtn = document.querySelector('.bottom_btn');
 
-    // const header = document.querySelector('#header');
 
-    window.addEventListener('scroll', headerScroll, {
-        passive: true
-    });
+    window.addEventListener('scroll', headerScroll, {passive: true});
 
     function headerScroll() {
 
@@ -336,21 +338,54 @@
         }
     }
 
-    // 버튼에 리스너를 붙인다
-    // 클릭할때마다 img에 클래스 on을 차례대로 붙인다
 
-    prevBtn.addEventListener('click', prevWork, {passive: true});
-    nextBtn.addEventListener('click', nextWork, {passive: true});
-    console.log(mainSlide)
+    // 메인 슬라이드 관련 스크립트
+    prevBtn.addEventListener('click', prevWork, {
+        passive: true
+    });
+    nextBtn.addEventListener('click', nextWork, {
+        passive: true
+    });
+
+    var nowOn = '';
+
+    setInterval(nextWork, 3000);
 
     function prevWork() {
-
-
+        for (let i = 0; i < mainSlide.length; i++) {
+            if (mainSlide[i].className === 'on') {
+                nowOn = mainSlide[i]
+            }
+        }
+        if (nowOn.previousElementSibling !== null) {
+            nowOn.previousElementSibling.classList.add('on');
+            console.log(mainSlideWrap.lastElementChild)
+        } else {
+            mainSlideWrap.lastElementChild.classList.add('on')
+        }
+        nowOn.classList.remove('on');
     }
 
     function nextWork() {
-
+        for (let i = 0; i < mainSlide.length; i++) {
+            if (mainSlide[i].className === 'on') {
+                nowOn = mainSlide[i]
+            }
+        }
+        if (nowOn.nextElementSibling !== null) {
+            nowOn.nextElementSibling.classList.add('on');
+        } else {
+            mainSlideWrap.firstElementChild.classList.add('on')
+        }
+        nowOn.classList.remove('on');
     }
+
+    for (let i = 0; i < mainSlide.length; i++) {
+        const newLi = document.createElement('li');
+        bottomBtn.appendChild(newLi)
+    }
+    
+    
 </script>
 
 </html>

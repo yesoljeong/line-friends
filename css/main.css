@@ -22,7 +22,6 @@ html,
 /* HEADER */
 #header {
     background-color: rgba(255, 255, 255, 0);
-    border: 1px solid red;
     position: absolute;
     top: 0;
     right: 0;
@@ -121,12 +120,46 @@ html,
 .main_visual .main_slide img{
     transition: all .3s linear;
     opacity: 0;
+    position: absolute;
 }
 
 .main_visual .main_slide img.on{
     opacity: 1;
 }
 
+.main_visual .bottom_btn{
+    position: absolute;
+    left:50%;
+    transform: translate(-50%);
+    bottom:50px;
+    width:150px;
+    height:15px;
+    border:1px solid red;
+    z-index: 20;
+    display:flex;
+    justify-content: center;
+}
+
+.main_visual .bottom_btn li{
+    margin-right:20px;
+    width:6px;
+    height:6px;
+    border:1px solid #fff;
+    border-radius: 50%;
+}
+
+.main_visual .bottom_btn li{
+    margin-right:20px;
+    width:6px;
+    height:6px;
+    border:1px solid #fff;
+    z-index: 999999;
+    border-radius: 50%;
+}
+
+.main_visual .bottom_btn li.on{
+    background-color:#fff;
+}
 
 .main_visual_text {
     color: #fff;
@@ -134,7 +167,7 @@ html,
     top: 50%;
     left: 50%;
     transform: translate(-50%);
-    z-index: 999;
+    z-index: 2;
 }
 
 .main_visual_text p {
@@ -169,7 +202,7 @@ html,
     background-size: 200px 390px;
     width: 30px;
     height: 65px;
-    z-index: 999;
+    z-index: 2;
     cursor: pointer;
 }
 
@@ -448,7 +481,7 @@ html,
 }
 
 #footer h2 {
-    background-image: url('img/footer_logo.png');
+    background-image: url('../img/footer_logo.png');
     width: 152px;
     height: 19px;
 }
