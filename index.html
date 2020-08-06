@@ -50,7 +50,7 @@
                 <img src="img/main_02.jpg" alt="">
                 <img src="img/main_03.jpg" alt="">
             </div>
-            <ul class="bottom_btn"></ul>
+            <div class="bottom_btn"></div>
             <button type="button" class="btn_prev"><span class="screen_out">이전</span></button>
             <button type="button" class="btn_next"><span class="screen_out">다음</span></button>
             <div class="main_visual_text">
@@ -112,7 +112,14 @@
 
             <!-- GALLERY -->
             <article id="gallery">
-                <img src="img/5e9e58d2a43c40a599b8918bd72c9df5.jpg" alt="">
+                <div>
+                    <img src="img/gallery_01.jpg" class="on" alt="">
+                    <img src="img/gallery_02.jpg" alt="">
+                    <img src="img/gallery_03.jpg" alt="">
+                    <img src="img/gallery_04.jpg" alt="">
+                </div>
+                <button type="button" class="btn_prev"><span class="screen_out">이전</span></button>
+                <button type="button" class="btn_next"><span class="screen_out">다음</span></button>
             </article>
 
             <!-- MEDIA -->
@@ -320,12 +327,18 @@
     const logoImg = document.querySelector('#header .logo>img');
     const mainSlide = document.querySelectorAll('.main_slide img');
     const mainSlideWrap = document.querySelector('.main_slide');
-    const prevBtn = document.querySelector('.btn_prev');
-    const nextBtn = document.querySelector('.btn_next');
+    const mainPrevBtn = document.querySelector('.main_visual .btn_prev');
+    const mainnextBtn = document.querySelector('.main_visual .btn_next');
+    const gallPrevBtn = document.querySelector('#gallery .btn_prev');
+    const gallnextBtn = document.querySelector('#gallery .btn_next');
     const bottomBtn = document.querySelector('.bottom_btn');
+    const gallImg = document.querySelectorAll('#gallery img');
 
 
-    window.addEventListener('scroll', headerScroll, {passive: true});
+
+    window.addEventListener('scroll', headerScroll, {
+        passive: true
+    });
 
     function headerScroll() {
 
@@ -338,54 +351,85 @@
         }
     }
 
-
     // 메인 슬라이드 관련 스크립트
-    prevBtn.addEventListener('click', prevWork, {
+    mainPrevBtn.addEventListener('click', prevWork, {
         passive: true
     });
-    nextBtn.addEventListener('click', nextWork, {
+    mainnextBtn.addEventListener('click', nextWork, {
         passive: true
     });
 
-    var nowOn = '';
+    // gallery 슬라이드 관련 스크립트
+
+    gallPrevBtn.addEventListener('click', prevWork)
+    gallnextBtn.addEventListener('click', gallNextWork)
 
     setInterval(nextWork, 3000);
 
-    function prevWork() {
+    function gallPrevWork() {
+        let nowOn = '';
+        for (let i = 0; i < gallImg.length; i++) {
+            if (gallImg[i].className === 'on') {
+                nowOn = gallImg[i]
+            }
+        }
+        prevOn(nowOn);
+    }
+
+    function gallNextWork() {
+        let nowOn = '';
+        for (let i = 0; i < gallImg.length; i++) {
+            if (gallImg[i].className === 'on') {
+                nowOn = gallImg[i]
+            }
+        }
+        nextOn(nowOn);
+    }
+
+    function prevWork(e) {
+        const parent = e.currentTarget.parentNode;
+        const imgs = parent.querySelectorAll('img');
+        let nowOn = '';
+        for (let i = 0; i < imgs.length; i++) {
+            if (imgs[i].className === 'on') {
+                nowOn = imgs[i]
+            }
+        }
+        prevOn(nowOn);
+    }
+
+    function nextWork() {
+        let nowOn = '';
         for (let i = 0; i < mainSlide.length; i++) {
             if (mainSlide[i].className === 'on') {
                 nowOn = mainSlide[i]
             }
         }
+        nextOn(nowOn);
+    }
+
+    function prevOn(nowOn) {
         if (nowOn.previousElementSibling !== null) {
             nowOn.previousElementSibling.classList.add('on');
-            console.log(mainSlideWrap.lastElementChild)
         } else {
-            mainSlideWrap.lastElementChild.classList.add('on')
+            nowOn.parentNode.lastElementChild.classList.add('on')
         }
         nowOn.classList.remove('on');
     }
 
-    function nextWork() {
-        for (let i = 0; i < mainSlide.length; i++) {
-            if (mainSlide[i].className === 'on') {
-                nowOn = mainSlide[i]
-            }
-        }
+    function nextOn(nowOn) {
         if (nowOn.nextElementSibling !== null) {
             nowOn.nextElementSibling.classList.add('on');
         } else {
-            mainSlideWrap.firstElementChild.classList.add('on')
+            nowOn.parentNode.firstElementChild.classList.add('on')
         }
         nowOn.classList.remove('on');
     }
 
     for (let i = 0; i < mainSlide.length; i++) {
-        const newLi = document.createElement('li');
+        const newLi = document.createElement('a');
         bottomBtn.appendChild(newLi)
     }
-    
-    
 </script>
 
 </html>

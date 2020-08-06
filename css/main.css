@@ -102,13 +102,13 @@ html,
     overflow: hidden;
 }
 
-.main_visual .cover{
+.main_visual .cover {
     background-image: url('../img/bg_dim.png');
     position: absolute;
-    top:0;
-    right:0;
-    left:0;
-    bottom:0;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
     z-index: 1;
 }
 
@@ -117,48 +117,40 @@ html,
     top: -170px;
 }
 
-.main_visual .main_slide img{
+.main_visual .main_slide img {
     transition: all .3s linear;
     opacity: 0;
     position: absolute;
 }
 
-.main_visual .main_slide img.on{
+.main_visual .main_slide img.on {
     opacity: 1;
 }
 
-.main_visual .bottom_btn{
+.main_visual .bottom_btn {
     position: absolute;
-    left:50%;
+    left: 50%;
     transform: translate(-50%);
-    bottom:50px;
-    width:150px;
-    height:15px;
-    border:1px solid red;
+    bottom: 50px;
+    width: 150px;
+    height: 15px;
+    border: 1px solid red;
     z-index: 20;
-    display:flex;
+    display: flex;
     justify-content: center;
 }
 
-.main_visual .bottom_btn li{
-    margin-right:20px;
-    width:6px;
-    height:6px;
-    border:1px solid #fff;
+.main_visual .bottom_btn a {
+    margin: 0 10px;
+    width: 6px;
+    height: 6px;
+    border: 1px solid #fff;
     border-radius: 50%;
+    cursor: pointer;
 }
 
-.main_visual .bottom_btn li{
-    margin-right:20px;
-    width:6px;
-    height:6px;
-    border:1px solid #fff;
-    z-index: 999999;
-    border-radius: 50%;
-}
-
-.main_visual .bottom_btn li.on{
-    background-color:#fff;
+.main_visual .bottom_btn a.on {
+    background-color: #fff;
 }
 
 .main_visual_text {
@@ -273,17 +265,48 @@ html,
     border: 0px;
 }
 
+/* gallery */
+
 #section #gallery {
     width: 100%;
-    height: 930px;
+    height: 700px;
     overflow: hidden;
     position: relative;
 }
 
 #section #gallery img {
-    width: 100%;
     position: absolute;
-    top: -150px;
+    top:-130px;
+    opacity: 0;
+    transition: all .3s ease;
+}
+
+#section #gallery img.on {
+    opacity: 1;
+}
+
+#section #gallery button {
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%);
+    padding: 0;
+    border: 0;
+    background: url('../img/spr.png');
+    background-size: 200px 390px;
+    width: 30px;
+    height: 65px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+#section #gallery .btn_prev {
+    left: 50px;
+    background-position: 0 165px;
+}
+
+#section #gallery .btn_next {
+    right: 50px;
+    background-position: 0 230px;
 }
 
 /* MEDIA */
