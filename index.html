@@ -45,10 +45,10 @@
                 </div>
             </header>
             <div class="cover"></div>
-            <div class="main_slide">
-                <img src="img/main_01.jpg" class="on" alt="">
-                <img src="img/main_02.jpg" alt="">
-                <img src="img/main_03.jpg" alt="">
+            <div class="img_wrap">
+                <div class="on"></div>
+                <div></div>
+                <div></div>
             </div>
             <div class="bottom_btn"></div>
             <button type="button" class="btn_prev"><span class="screen_out">이전</span></button>
@@ -113,13 +113,15 @@
             <!-- GALLERY -->
             <article id="gallery">
                 <div>
-                    <img src="img/gallery_01.jpg" class="on" alt="">
-                    <img src="img/gallery_02.jpg" alt="">
-                    <img src="img/gallery_03.jpg" alt="">
-                    <img src="img/gallery_04.jpg" alt="">
+                    <div class="img_wrap">
+                        <div class="on"></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>             
+                    </div>
+                    <button type="button" class="btn_prev"><span class="screen_out">이전</span></button>
+                    <button type="button" class="btn_next"><span class="screen_out">다음</span></button>
                 </div>
-                <button type="button" class="btn_prev"><span class="screen_out">이전</span></button>
-                <button type="button" class="btn_next"><span class="screen_out">다음</span></button>
             </article>
 
             <!-- MEDIA -->
@@ -325,16 +327,12 @@
     const htmlElem = document.querySelector('html');
     const header = document.querySelector('#header');
     const logoImg = document.querySelector('#header .logo>img');
-    const mainSlide = document.querySelectorAll('.main_slide img');
-    const mainSlideWrap = document.querySelector('.main_slide');
     const mainPrevBtn = document.querySelector('.main_visual .btn_prev');
     const mainnextBtn = document.querySelector('.main_visual .btn_next');
     const gallPrevBtn = document.querySelector('#gallery .btn_prev');
     const gallnextBtn = document.querySelector('#gallery .btn_next');
     const bottomBtn = document.querySelector('.bottom_btn');
-    const gallImg = document.querySelectorAll('#gallery img');
-
-
+    const mainSlideImgs = document.querySelectorAll('.main_visual .img_wrap>div');
 
     window.addEventListener('scroll', headerScroll, {
         passive: true
@@ -358,37 +356,19 @@
     mainnextBtn.addEventListener('click', nextWork, {
         passive: true
     });
+    gallPrevBtn.addEventListener('click', prevWork, {
+        passive: true
+    });
+    gallnextBtn.addEventListener('click', nextWork, {
+        passive: true
+    });
 
-    // gallery 슬라이드 관련 스크립트
-
-    gallPrevBtn.addEventListener('click', prevWork)
-    gallnextBtn.addEventListener('click', gallNextWork)
-
-    setInterval(nextWork, 3000);
-
-    function gallPrevWork() {
-        let nowOn = '';
-        for (let i = 0; i < gallImg.length; i++) {
-            if (gallImg[i].className === 'on') {
-                nowOn = gallImg[i]
-            }
-        }
-        prevOn(nowOn);
-    }
-
-    function gallNextWork() {
-        let nowOn = '';
-        for (let i = 0; i < gallImg.length; i++) {
-            if (gallImg[i].className === 'on') {
-                nowOn = gallImg[i]
-            }
-        }
-        nextOn(nowOn);
-    }
+    // setInterval(nextWork, 3000);
 
     function prevWork(e) {
         const parent = e.currentTarget.parentNode;
-        const imgs = parent.querySelectorAll('img');
+        const imgs = parent.querySelectorAll('.img_wrap>div');
+        console.log(imgs)
         let nowOn = '';
         for (let i = 0; i < imgs.length; i++) {
             if (imgs[i].className === 'on') {
@@ -398,11 +378,13 @@
         prevOn(nowOn);
     }
 
-    function nextWork() {
+    function nextWork(e) {
+        const parent = e.currentTarget.parentNode;
+        const imgs = parent.querySelectorAll('.img_wrap>div');
         let nowOn = '';
-        for (let i = 0; i < mainSlide.length; i++) {
-            if (mainSlide[i].className === 'on') {
-                nowOn = mainSlide[i]
+        for (let i = 0; i < imgs.length; i++) {
+            if (imgs[i].className === 'on') {
+                nowOn = imgs[i]
             }
         }
         nextOn(nowOn);
@@ -426,10 +408,11 @@
         nowOn.classList.remove('on');
     }
 
-    for (let i = 0; i < mainSlide.length; i++) {
+    for (let i = 0; i < mainSlideImgs.length; i++) {
         const newLi = document.createElement('a');
         bottomBtn.appendChild(newLi)
     }
+    console.log(mainSlideImgs)
 </script>
 
 </html>
