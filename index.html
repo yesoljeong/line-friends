@@ -117,7 +117,7 @@
                         <div class="on"></div>
                         <div></div>
                         <div></div>
-                        <div></div>             
+                        <div></div>
                     </div>
                     <button type="button" class="btn_prev"><span class="screen_out">이전</span></button>
                     <button type="button" class="btn_next"><span class="screen_out">다음</span></button>
@@ -334,9 +334,12 @@
     const bottomBtn = document.querySelector('.bottom_btn');
     const mainSlideImgs = document.querySelectorAll('.main_visual .img_wrap>div');
 
+
+    // 헤더 스크립트
     window.addEventListener('scroll', headerScroll, {
         passive: true
     });
+
 
     function headerScroll() {
 
@@ -363,12 +366,31 @@
         passive: true
     });
 
-    // setInterval(nextWork, 3000);
+    // 이미지 자동으로 돌아가는 스크립트
+    setInterval(nextWorkAuto, 3000);
 
+    // 메인 슬라이드 하단 버튼 생성 및 className 지정 스크립트
+    for (let i = 0; i < mainSlideImgs.length; i++) {
+        const newLi = document.createElement('a');
+        bottomBtn.appendChild(newLi)
+    }
+
+    const bottomBtnA = document.querySelectorAll('.bottom_btn a');
+    console.log(bottomBtnA)
+
+    for (let i = 0; i < mainSlideImgs.length; i++) {
+        mainSlideImgs[i].indexNum = i
+
+        if (mainSlideImgs[i].classList.contains('on')) {
+            const mainImgIndex = mainSlideImgs[i].indexNum
+            bottomBtnA[mainImgIndex].className = 'on'
+        }
+    }
+
+    // 슬라이드 버튼 클릭 이벤트 관련 스크립트
     function prevWork(e) {
         const parent = e.currentTarget.parentNode;
         const imgs = parent.querySelectorAll('.img_wrap>div');
-        console.log(imgs)
         let nowOn = '';
         for (let i = 0; i < imgs.length; i++) {
             if (imgs[i].className === 'on') {
@@ -376,6 +398,7 @@
             }
         }
         prevOn(nowOn);
+        bottomBtnOn();
     }
 
     function nextWork(e) {
@@ -388,8 +411,26 @@
             }
         }
         nextOn(nowOn);
+        bottomBtnOn();
     }
 
+    // 자동으로 이미지 돌아가는 스크립트
+    function nextWorkAuto() {
+        const imgWraps = document.querySelectorAll('.img_wrap');
+        for (let i = 0; i < imgWraps.length; i++) {
+            const imgs = imgWraps[i].querySelectorAll('div');
+            let nowOn = '';
+            for (let i = 0; i < imgs.length; i++) {
+                if (imgs[i].className === 'on') {
+                    nowOn = imgs[i]
+                }
+            }
+            nextOn(nowOn);
+            bottomBtnOn();
+        }
+    }
+
+    // 버튼 클릭했을 때 다음 요소 이전 요소에 클래스 on주는 스크립트
     function prevOn(nowOn) {
         if (nowOn.previousElementSibling !== null) {
             nowOn.previousElementSibling.classList.add('on');
@@ -408,11 +449,28 @@
         nowOn.classList.remove('on');
     }
 
-    for (let i = 0; i < mainSlideImgs.length; i++) {
-        const newLi = document.createElement('a');
-        bottomBtn.appendChild(newLi)
+    // bottom 버튼에 on주는 function
+    function bottomBtnOn() {
+
+        bottomBtnRemoveOn()
+
+        for (let i = 0; i < mainSlideImgs.length; i++) {
+            mainSlideImgs[i].indexNum = i
+
+            if (mainSlideImgs[i].classList.contains('on')) {
+
+                const Index = mainSlideImgs[i].indexNum
+                bottomBtnA[Index].className = 'on'
+            }
+        }
     }
-    console.log(mainSlideImgs)
+
+    // bottom 버튼에 on을 지워주는 function
+    function bottomBtnRemoveOn() {
+        for (let i = 0; i < mainSlideImgs.length; i++) {
+            bottomBtnA[i].classList.remove('on')
+        }
+    }
 </script>
 
 </html>
